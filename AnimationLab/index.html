@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .highlighted {
+            border: 3px solid black;
+        }
+
+        .clicked {
+            animation-name: grow3times;
+            animation-duration: 3s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes grow3times {
+            from {height: 1em; width: 20px;}
+            to {height: 3em; width: 60px;}
+        }
+
+        .twoby3holder {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .oneby3 {
+            display: flex;
+            flex: 1;
+            justify-content: space-around;
+        }
+
+        .purpleblock {
+            height: 100px;
+            width: 25%;
+            background-color: blueviolet;
+            margin: 10px;
+        }
+
+        .blueblock {
+            height: 100px;
+            width: 98%;
+            background-color: blue;
+            margin: 10px;
+        }
+
+        .fullwrapper {
+            opacity: 0;
+        }
+    </style>
+    <script src="js/code.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js'></script>
+    <div class='fullwrapper'>
+        <h1>Title</h1>
+        <div class='blueblock'></div>
+        <div class="twoby3holder">
+            <div class='oneby3'>
+                <div class='purpleblock'></div>
+                <div class='purpleblock'></div>
+                <div class='purpleblock'></div>
+            </div>
+            <div class='oneby3'>
+                <div class='purpleblock'></div>
+                <div class='purpleblock'></div>
+                <div class='purpleblock'></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
