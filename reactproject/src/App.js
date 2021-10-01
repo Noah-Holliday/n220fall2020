@@ -1,25 +1,49 @@
-import logo from './logo.svg';
 import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload. Learning is cool
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+  //creation of our recipe list
+  state = {
+    recipes: [
+      "Pizza Pie",
+      "Steak",
+      "Apple Pie",
+      "Chocolate Ice Cream",
+      "Cheese Sticks",
+      "Chicken",
+      "Waffles",
+      "Cheese Cake",
+      "Vanilla Cake",
+      "Cheese Burger"
+    ],
+    searchTerm: "P"
+  };
+
+
+  render() {
+
+    let matchedRecipes = this.state.recipes.filter((recipe) => {
+      return recipe.toLocaleUpperCase().includes(this.state.searchTerm.toLocaleUpperCase());
+    })
+
+    //pre create list of repices using map looping
+    let recipesList = matchedRecipes.map((recipe) => {
+      return <li>{recipe}</li>;
+    });
+
+    //display premade list
+    return (
+      <div>
+        <h2>Recipes</h2>
+        <input value={this.state.searchTerm} onChange={(event) => {
+          this.updateSearch(event);
+        }}
+        />
+        <ul>{recipesList}</ul>
+      </div>
+    );
+  }
+  updateSearch(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
 }
-
-export default App;
