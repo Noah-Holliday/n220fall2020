@@ -11,31 +11,31 @@ class Ship {
     //create the ships cordinates
     placeTheShip = function(column, row, direction) {
         //base cord array
-        coordinateArray = []
+        var coordinateArray = []
         //make enital array all other coords are based off of
-        basecord = {row: this.row, column: this.column}
+        var basecord = {row: row, column: column}
         coordinateArray.push(basecord)
         //if the ship direction is horizontal
-        if (this.direction = "H"){
+        if (direction = "H"){
             //run loop until it surpases ship length
-            for (let i=1; i <= this.length; i++) {
+            for (let i=1; i < this.length; i++) {
                 //create next coordinate and place it into array
-                CordHolder = {row: this.row, column: this.column+i};
+                var CordHolder = {row: row, column: column+i};
                 coordinateArray.push(CordHolder);
-                if (this.column+i > 10) {
+                if (column+i > 10) {
                     //rause error illegal placement off map
                 }
             }
             this.coordinates = coordinateArray;
         }
         //if the ship direction is vertical
-        else if (this.direction = "V"){
+        else if (direction = "V"){
             //run loop until it surpases ship length
-            for (let i=1; i <= this.length; i++) {
+            for (let i=1; i < this.length; i++) {
                 //create next coordinate and place it into array
-                CordHolder = {row: this.row+i, column: this.column};
+                var CordHolder = {row: row+i, column: column};
                 coordinateArray.push(CordHolder);
-                if (this.row+i > 10) {
+                if (row+i > 10) {
                     //rause error illegal placement off map
                 }
             }
@@ -57,6 +57,7 @@ class Ship {
 //just a ship with default values
 class AircraftCarrier extends Ship {
     constructor(){
+        super()
         this.length = 5
         this.name = "Aircraft Carrier"
         this.hits = 0
@@ -97,18 +98,18 @@ ListofShips = [AircraftCarrier, Battleship, Submarine, Submarine, Destroyer]
 //class for player
 class Player {
     constructor(name) {
-        this.name = name;
-        this.board = this.createEmptyBoard()
-        this.opponent = null;
+        this.name = name
+        this.board = []
+        this.opponent = null
         this.ships = []
     }
 
     //create board
-    createEmptyBoard = function() {
+    createEmptyBoard() {
         //empty starter board
-        emptyboard = []
+        var emptyboard = []
         //empty rows
-        rows = []
+        var rows = []
         //push 10 falses to row array
         for (let i=0; i < 10; i++) {
             rows.push(false)
@@ -117,19 +118,33 @@ class Player {
         for (let i=0;i<10;i++) {
             emptyboard.push(rows)
         }
-        return emptyboard
+        this.board = emptyboard
     }
 
-    placeShip(ship, col, row, direction){
+    placeShip(ship, col, row, direction) {
+        var currentboard = this.board
+        console.log(ship)
         ship.placeTheShip(col, row, direction)
-
         ship.coordinates.forEach(function(coord){
             console.log(coord)
+            console.log(currentboard[coord.column][coord.row])
+            if (currentboard[coord.column][coord.row]) {
+                // already ship placed there
+            }
+            else {
+                currentboard[coord.column][coord.row] = ship
+            }
         }) 
-
+        this.board = currentboard
     }
 
 }
+
+player = new Player("Brundhilda")
+player.createEmptyBoard();
+ship1 = new AircraftCarrier();
+player.placeShip(ship1, 1, 1, "H")
+console.log(player)
 
 class Game {
 
