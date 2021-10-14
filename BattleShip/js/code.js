@@ -13,14 +13,14 @@ class Ship {
         //base cord array
         coordinateArray = []
         //make enital array all other coords are based off of
-        basecord = (this.row, this.column)
+        basecord = {row: this.row, column: this.column}
         coordinateArray.push(basecord)
         //if the ship direction is horizontal
         if (this.direction = "H"){
             //run loop until it surpases ship length
             for (let i=1; i <= this.length; i++) {
                 //create next coordinate and place it into array
-                CordHolder = (this.row, this.column+i);
+                CordHolder = {row: this.row, column: this.column+i};
                 coordinateArray.push(CordHolder);
                 if (this.column+i > 10) {
                     //rause error illegal placement off map
@@ -33,7 +33,7 @@ class Ship {
             //run loop until it surpases ship length
             for (let i=1; i <= this.length; i++) {
                 //create next coordinate and place it into array
-                CordHolder = (this.row+i, this.column);
+                CordHolder = {row: this.row+i, column: this.column};
                 coordinateArray.push(CordHolder);
                 if (this.row+i > 10) {
                     //rause error illegal placement off map
@@ -103,16 +103,32 @@ class Player {
         this.ships = []
     }
 
+    //create board
     createEmptyBoard = function() {
+        //empty starter board
         emptyboard = []
+        //empty rows
         rows = []
+        //push 10 falses to row array
         for (let i=0; i < 10; i++) {
             rows.push(false)
         }
+        //push then rows to emptyboard
         for (let i=0;i<10;i++) {
             emptyboard.push(rows)
         }
+        return emptyboard
     }
+
+    placeShip(ship, col, row, direction){
+        ship.placeTheShip(col, row, direction)
+
+        ship.coordinates.forEach(function(coord){
+            console.log(coord)
+        }) 
+
+    }
+
 }
 
 class Game {
