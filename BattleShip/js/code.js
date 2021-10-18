@@ -9,14 +9,14 @@ class Ship {
     }
 
     //create the ships cordinates
-    placeTheShip = function(column, row, direction) {
+    placeTheShip = function(row, column, direction) {
         //base cord array
         var coordinateArray = []
         //make enital array all other coords are based off of
         var basecord = {row: row, column: column}
         coordinateArray.push(basecord)
         //if the ship direction is horizontal
-        if (direction = "H"){
+        if (direction == "H"){
             //run loop until it surpases ship length
             for (let i=1; i < this.length; i++) {
                 //create next coordinate and place it into array
@@ -29,7 +29,7 @@ class Ship {
             this.coordinates = coordinateArray;
         }
         //if the ship direction is vertical
-        else if (direction = "V"){
+        else if (direction == "V"){
             //run loop until it surpases ship length
             for (let i=1; i < this.length; i++) {
                 //create next coordinate and place it into array
@@ -67,6 +67,7 @@ class AircraftCarrier extends Ship {
 //just a ship with default values
 class Battleship extends Ship {
     constructor(){
+        super()
         this.length = 4
         this.name = "Battleship"
         this.hits = 0
@@ -76,6 +77,7 @@ class Battleship extends Ship {
 //just a ship with default values
 class Submarine extends Ship {
     constructor(){
+        super()
         this.length = 3
         this.name = "Submarine"
         this.hits = 0
@@ -85,6 +87,7 @@ class Submarine extends Ship {
 //just a ship with default values
 class Destroyer extends Ship {
     constructor(){
+        super()
         this.length = 2
         this.name = "Destroyer"
         this.hits = 0
@@ -109,41 +112,50 @@ class Player {
         //empty starter board
         var emptyboard = []
         //empty rows
-        var rows = []
-        //push 10 falses to row array
-        for (let i=0; i < 10; i++) {
-            rows.push(false)
-        }
+        
         //push then rows to emptyboard
         for (let i=0;i<10;i++) {
+            var rows = []
+            //push 10 falses to row array
+            for (let i=0; i < 10; i++) {
+                rows.push(false)
+            }
             emptyboard.push(rows)
         }
         this.board = emptyboard
     }
 
     placeShip(ship, col, row, direction) {
-        var currentboard = this.board
-        console.log(ship)
+        let currentboard = this.board
         ship.placeTheShip(col, row, direction)
+        console.log(ship)
+        let Error = 0
         ship.coordinates.forEach(function(coord){
             console.log(coord)
-            console.log(currentboard[coord.column][coord.row])
-            if (currentboard[coord.column][coord.row]) {
-                // already ship placed there
-            }
-            else {
-                currentboard[coord.column][coord.row] = ship
+            console.log(currentboard[coord.row][coord.column])
+            if (currentboard[coord.row][coord.column]) {
+                Error++
+                console.log(Error)
             }
         }) 
-        this.board = currentboard
+        if(Error == 0) {
+            ship.coordinates.forEach(function(coord){
+                currentboard[coord.row][coord.column] = ship            }) 
+        }
     }
 
+}
+
+function Error() {
+    return console.log("Error")
 }
 
 player = new Player("Brundhilda")
 player.createEmptyBoard();
 ship1 = new AircraftCarrier();
 player.placeShip(ship1, 1, 1, "H")
+ship2 = new Submarine(); 
+player.placeShip(ship2, 1, 3, "V")
 console.log(player)
 
 class Game {
